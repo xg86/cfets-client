@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xquant.platform.component.darren.dao.WebDemoQuoteOrderMapper">
+	<resultMap id="BaseResultMap" type="com.xquant.platform.component.darren.vo.WebDemoQuoteOrder">
+		<result property="clordidClientId" column="Q_CLORDIDCLIENTID" />
+		<result property="ordId" column="Q_ORDID" />
+		<result property="quoteType" column="Q_QUOTETYPE" />
+		<result property="price" column="Q_PRICE" />
+		<result property="volume" column="Q_VOLUME" />
+		<result property="quoteId" column="Q_QUOTEID" />
+		<result property="transactTime" column="Q_TRANSACTTIME" />
+		<result property="side" column="Q_SIDE" />
+		<result property="clrOrdId" column="Q_CLRORDID" />
+		<result property="ordstatus" column="Q_ORDSTATUS" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		r.CLORDID_CLIENT_ID AS Q_CLORDIDCLIENTID,
+		r.ORD_ID AS Q_ORDID,
+		r.QUOTE_BIZ_TYPE AS Q_QUOTETYPE,
+		CASE
+		WHEN t.TRDTYPE = '0000000' THEN t.BND_NETPRICE
+		WHEN t.TRDTYPE = '0000001' THEN t.BND_NETPRICE
+		WHEN t.TRDTYPE = '0123100'
+		THEN t.BND_YTM
+		WHEN t.TRDTYPE = '0123101' THEN t.BND_YTM
+		WHEN t.TRDTYPE = '0500110' THEN s.PAY_RATE*100
+		WHEN t.TRDTYPE = '0500111' THEN s.PAY_RATE*100
+		END AS Q_PRICE,
+		t.ORDCOUNT AS Q_VOLUME,
+		r.QUOTE_ID AS Q_QUOTEID,
+		r.TRANSACT_TIME AS
+		Q_TRANSACTTIME,
+		t.TRDTYPE AS Q_SIDE,
+		r.CL_ORD_ID AS Q_CLRORDID,
+		t.ORDSTATUS AS Q_ORDSTATUS
+	</sql>
+
+	<select id="findAll" parameterType="String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from TTRD_XCC_QUOTE_RELATION r
+		INNER JOIN TTRD_OTC_TRADE t on t.ORD_ID = r.ORD_ID AND r.IS_MAIN_ORDER = 1 AND t.ORDSTATUS in (-2,-1) AND r.RELATION_STATUS
+		= 0
+		LEFT JOIN TTRD_IR_SWAP s ON s.I_CODE = t.INTORDID AND s.A_TYPE = t.A_TYPE AND s.M_TYPE = t.M_TYPE
+		WHERE r.TRANSACT_TIME LIKE '%${date}%'
+	</select>
+
+	<select id="count" parameterType="String" resultType="int">
+		select
+		count(1)
+		from TTRD_XCC_QUOTE_RELATION r
+		INNER JOIN TTRD_OTC_TRADE t on t.ORD_ID = r.ORD_ID AND r.IS_MAIN_ORDER = 1 AND t.ORDSTATUS in (-2,-1) AND r.RELATION_STATUS
+		= 0
+		LEFT JOIN TTRD_IR_SWAP s ON s.I_CODE = t.INTORDID AND s.A_TYPE = t.A_TYPE AND s.M_TYPE = t.M_TYPE
+		WHERE r.TRANSACT_TIME LIKE '%${date}%'
+	</select>
+
+	<select id="findByQuoteId" parameterType="String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from TTRD_XCC_QUOTE_RELATION r
+		INNER JOIN TTRD_OTC_TRADE t on t.ORD_ID = r.ORD_ID AND r.IS_MAIN_ORDER = 1 
+		LEFT JOIN TTRD_IR_SWAP s ON s.I_CODE = t.INTORDID AND s.A_TYPE = t.A_TYPE AND s.M_TYPE = t.M_TYPE
+		WHERE r.QUOTE_ID = #{quoteId}
+	</select>
+
+
+</mapper>

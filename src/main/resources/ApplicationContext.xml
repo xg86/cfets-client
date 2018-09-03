@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+
+	<bean id="horseMan" class="com.darren.Aop.Horseman" />
+	<bean id="swordMan" class="com.darren.Aop.Swordman"></bean>
+	<bean id="beforeAdvice" class="com.darren.Aop.BeforeAdvice" />
+	
+	<!--  
+		<bean id="advisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+			<property name="advice" ref="beforeAdvice"></property>
+			<property name="pattern" value=".*chop"></property>
+		</bean>
+	-->
+	
+	<bean id="pointcut" class="com.darren.Aop.DynamicStoragePointCut">
+		<property name="methodOption" value="1" />
+		<property name="classOption" value="1" />
+	</bean>
+	
+	<bean id="advisor"
+		class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="advice" ref="beforeAdvice" />
+		<property name="pointcut" ref="pointcut" />
+	</bean>
+	
+	
+	
+	<bean id="horseManProxyFactory"
+		class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="horseMan" />
+		<property name="interceptorNames">
+			<list>
+				<idref bean="advisor" />
+			</list>
+		</property>
+		<property name="proxyTargetClass" value="true" />
+	</bean>
+
+	<bean id="swordManProxyFactory"
+		class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="swordMan" />
+		<property name="interceptorNames">
+			<list>
+				<idref bean="advisor" />
+			</list>
+		</property>
+		<property name="proxyTargetClass" value="true" />
+	</bean>
+
+
+</beans>
