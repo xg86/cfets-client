@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xquant.platform.component.itf.cfets.common.api.FacadeArchiveService;
+import com.xquant.platform.component.itf.cfets.common.api.service.FacadeArchiveService;
 
 /**
  * Copyright © 2018 xQuant Info. Tech Ltd. All rights reserved.
