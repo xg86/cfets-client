@@ -19,7 +19,7 @@ public interface WebDemoQuoteOrderMapper {
 	public List<WebDemoQuoteOrder> findAll(@Param("date") String date);
 
 	/**
-	 * 查询某天的全部有效报价条数
+	 * 查询某天的全部有效报价条数                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 	 * 
 	 * @param date
 	 * @return

@@ -94,7 +94,7 @@ public class XswapRiskInstanceFactory {
 		request.setMarketIndicator("0");
 		request.setMarketID("X-Swap");
 		request.setInstrumentScopeSecurityType("SIRS");
-		request.setCountparty("104000150010100104001");
+		request.setCountparty("891012844010011610011");
 		return request;
 	}
 
@@ -116,15 +116,36 @@ public class XswapRiskInstanceFactory {
 		 instrument.setInstrumentScopeSecurityType(XSwapSecurityTypeEnum.SIRS);
 		 instrument.setMarketIndicator(XSwapMarketIndicatorEnum.SIRS);
 		 instrument.setSecurityID("SS1W3M_1903");
-		 instrument.setRiskInstrumentMultiplier(new BigDecimal("89.0000"));
+		 instrument.setRiskInstrumentMultiplier(new BigDecimal("1.8888"));
 		 xswapRiskRatioInstruments.add(instrument);
-		// instrument = new XswapRiskRatioInstrument();
-		// instrument.setClearingMethod(XSwapClearingMethodEnum.BILATERAL);
-		// instrument.setInstrumentScopeSecurityType(XSwapSecurityTypeEnum.SIRS);
-		// instrument.setMarketIndicator(XSwapMarketIndicatorEnum.SIRS);
-		// instrument.setSecurityID("FR007_3M");
-		// instrument.setRiskInstrumentMultiplier(new BigDecimal("96.0000"));
-		// xswapRiskRatioInstruments.add(instrument);
+		 instrument = new XswapRiskRatioInstrument();
+		 instrument.setClearingMethod(XSwapClearingMethodEnum.BILATERAL);
+		 instrument.setInstrumentScopeSecurityType(XSwapSecurityTypeEnum.SIRS);
+		 instrument.setMarketIndicator(XSwapMarketIndicatorEnum.SIRS);
+		 instrument.setSecurityID("SR073M_1809");
+		 instrument.setRiskInstrumentMultiplier(new BigDecimal("1.8888"));
+		 xswapRiskRatioInstruments.add(instrument);
+		 instrument = new XswapRiskRatioInstrument();
+		 instrument.setClearingMethod(XSwapClearingMethodEnum.BILATERAL);
+		 instrument.setInstrumentScopeSecurityType(XSwapSecurityTypeEnum.SIRS);
+		 instrument.setMarketIndicator(XSwapMarketIndicatorEnum.SIRS);
+		 instrument.setSecurityID("SR073M_1810");
+		 instrument.setRiskInstrumentMultiplier(new BigDecimal("1.8888"));
+		 xswapRiskRatioInstruments.add(instrument);
+		 instrument = new XswapRiskRatioInstrument();
+		 instrument.setClearingMethod(XSwapClearingMethodEnum.BILATERAL);
+		 instrument.setInstrumentScopeSecurityType(XSwapSecurityTypeEnum.SIRS);
+		 instrument.setMarketIndicator(XSwapMarketIndicatorEnum.SIRS);
+		 instrument.setSecurityID("SR073M_1811");
+		 instrument.setRiskInstrumentMultiplier(new BigDecimal("1.8888"));
+		 xswapRiskRatioInstruments.add(instrument);
+		 instrument = new XswapRiskRatioInstrument();
+		 instrument.setClearingMethod(XSwapClearingMethodEnum.BILATERAL);
+		 instrument.setInstrumentScopeSecurityType(XSwapSecurityTypeEnum.SIRS);
+		 instrument.setMarketIndicator(XSwapMarketIndicatorEnum.SIRS);
+		 instrument.setSecurityID("SR073M_1812");
+		 instrument.setRiskInstrumentMultiplier(new BigDecimal("1.8888"));
+		 xswapRiskRatioInstruments.add(instrument);
 		request.setXswapRiskRatioInstruments(xswapRiskRatioInstruments);
 		return request;
 	}
